@@ -10,6 +10,11 @@ def index(request):
     })
 
 def title(request, title):
-    return render(request, "encyclopedia/title.html", {
+    if util.get_entry(title):
+        return render(request, "encyclopedia/title.html", {
         "title": markdown2.markdown(util.get_entry(title))
     })
+    else:
+        return render(request, 'encyclopedia/error.html', {
+            "error": title
+        })
