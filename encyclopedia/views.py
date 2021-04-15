@@ -1,16 +1,6 @@
 from django.shortcuts import render
 from . import util
 import markdown2
-from django.urls import reverse
-from django.http import HttpResponseRedirect
-from django import forms
-
-
-class SearchForm(forms.Form):
-    title = forms.CharField(widget=forms.TextInput(attrs={
-        "class": "search"
-    }))
-
 
 def index(request):
     return render(request, "encyclopedia/index.html", {
@@ -28,17 +18,27 @@ def title(request, title):
             "error": title
         })
 
+
 def search(request):
-    entries = util.list_entries()
     query = request.GET.get("q")
+    entries = util.list_entries()
+    print(entries)
+    search_result = [s for s in entries if query.lower() in s.lower()]
     if util.get_entry(query):
         return render(request, "encyclopedia/search.html", {
             "title": markdown2.markdown(util.get_entry(query))
+        })
+    elif search_result:
+        print("yes")
+        print(search_result)
+        return render(request, "encyclopedia/search_results.html", {
+            "results": search_result
         })
     else:
         return render(request, 'encyclopedia/error.html', {
             "error": query
         })
+
 
 
 
