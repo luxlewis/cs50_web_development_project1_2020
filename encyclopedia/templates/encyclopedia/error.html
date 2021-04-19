@@ -5,5 +5,9 @@
 {% endblock %}
 
 {% block body %}
-    <h1>Sorry {{ error }} does not exist</h1>
+    {% if not_found %}
+        <h1>Sorry {{ not_found }} does not exist</h1>
+    {% elif already_exists %}
+        <h1> Sorry {{ already_exists }} already exists</h1>
+    {% endif %}
 {% endblock %}
