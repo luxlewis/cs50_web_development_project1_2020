@@ -10,7 +10,8 @@
     <form action="{% url 'new_page' %}" method="post">
         {% csrf_token %}
         {{ form }}
-        <input type="submit">
+       <input id="title" type="submit">
+
     </form>
     <a href="{% url 'index' %}">View Entries</a>
 

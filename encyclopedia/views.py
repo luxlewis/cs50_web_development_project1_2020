@@ -56,7 +56,9 @@ def new_page(request):
                 })
             else:
                 util.save_entry(title, content)
-                return HttpResponseRedirect(reverse("index"))
+                return render(request, "encyclopedia/title.html", {
+                    "title": markdown2.markdown(util.get_entry(title))
+                })
     else:
         return render(request, 'encyclopedia/new_page.html', {
         "form": NewSearchForm()
